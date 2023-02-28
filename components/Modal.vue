@@ -45,7 +45,7 @@ const { task } = storeToRefs(taskStore)
               leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-                class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                class="w-full max-w-md transform rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
             >
               <DialogTitle
                   as="h3"
@@ -53,7 +53,7 @@ const { task } = storeToRefs(taskStore)
               >
                 Create task
               </DialogTitle>
-              <form @submit.prevent="taskStore.postTask()">
+              <form @submit.prevent="taskStore.createOrUpdateTask()">
                 <div class="mt-2">
                   <div>
                     <label for="title" class="block mb-2 text-sm font-medium text-gray-500">Title</label>
@@ -69,6 +69,9 @@ const { task } = storeToRefs(taskStore)
                               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-400 focus:border-gray-400 outline-none"
                               placeholder="Create a task description..." v-model="task.description"></textarea>
                   </div>
+                </div>
+                <div class="mt-2">
+                  <ListDropdown v-model="task.day"/>
                 </div>
                 <div class="mt-4">
                   <button
