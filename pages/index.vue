@@ -27,9 +27,6 @@ const editTask = (id: number) => {
 
 <template>
 <div class="text-xl w-full h-full py-8 px-16">
-  <Teleport to="body">
-    <Modal/>
-  </Teleport>
   <section class="grid grid-cols-2 h-full">
     <div class="flex flex-col h-full justify-start">
       <h3 class="mb-4">Today's Tasks</h3>

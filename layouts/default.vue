@@ -6,7 +6,10 @@
     <Sidebar/>
     <div class="w-full h-full">
       <Topbar/>
-      <slot/>
+      <slot></slot>
+      <Teleport to="body">
+        <Modal/>
+      </Teleport>
     </div>
   </div>
 </template>
