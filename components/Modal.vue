@@ -10,10 +10,26 @@ import {
 import { useModalStore } from "~/store/modal"
 import { useTaskStore } from "~/store/task"
 import {storeToRefs} from "pinia"
+import { useMutation, useQueryClient } from '@tanstack/vue-query';
+const queryClient = useQueryClient()
 const modalStore = useModalStore()
 const taskStore = useTaskStore()
 const { open } = storeToRefs(modalStore)
 const { task } = storeToRefs(taskStore)
+
+type Day = 'today' | 'tomorrow'
+
+const title = ref("")
+const description = ref("")
+const day = ref<Day>("today")
+
+const createNewTask = async () => await $fetch('http://localhost:3000/api/tasks/1', {method: 'post', body: {title: title.value, description: description.value, day: day.value} })
+const { mutate } = useMutation({ mutationFn: createNewTask, onSuccess: () => { queryClient.invalidateQueries({queryKey: ['tasks']}) } })
+const addNewTask = () => {
+  mutate()
+}
+
+
 </script>
 
 <template>
@@ -53,13 +69,13 @@ const { task } = storeToRefs(taskStore)
               >
                 Create task
               </DialogTitle>
-              <form @submit.prevent="taskStore.createOrUpdateTask()">
+              <form @submit.prevent="addNewTask()">
                 <div class="mt-2">
                   <div>
                     <label for="title" class="block mb-2 text-sm font-medium text-gray-500">Title</label>
                     <input type="text" id="title"
                            class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-400 focus:border-gray-400 outline-none block w-full p-2.5"
-                           placeholder="Title" required v-model="task.title">
+                           placeholder="Title" required v-model="title">
                   </div>
                 </div>
                 <div class="mt-2">
@@ -67,11 +83,11 @@ const { task } = storeToRefs(taskStore)
                     <label for="description" class="block mb-2 text-sm font-medium text-gray-500">Description</label>
                     <textarea id="message" rows="4"
                               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-400 focus:border-gray-400 outline-none"
-                              placeholder="Create a task description..." v-model="task.description"></textarea>
+                              placeholder="Create a task description..." v-model="description"></textarea>
                   </div>
                 </div>
                 <div class="mt-2">
-                  <ListDropdown v-model="task.day"/>
+                  <ListDropdown v-model="day"/>
                 </div>
                 <div class="mt-4">
                   <button

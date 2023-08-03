@@ -30,7 +30,7 @@ defineProps<Props>()
       <ListboxButton
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 flex w-full p-2.5"
       >
-        <span class="truncate">{{ modelValue }}</span>
+        <span class="truncate capitalize">{{ modelValue }}</span>
         <span
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2"
         >
@@ -48,7 +48,7 @@ defineProps<Props>()
           leave-to-class="opacity-0"
       >
         <ListboxOptions
-            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+            class="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm capitalize"
         >
           <ListboxOption
               v-slot="{ active, selected }"
@@ -59,13 +59,13 @@ defineProps<Props>()
             <li
                 :class="[
                   active ? 'bg-gray-100 text-gray-900' : 'text-gray-900',
-                  'relative cursor-default select-none py-2 pl-10 pr-4',
+                  'relative cursor-default select-none py-2 pl-10 pr-4 capitalize',
                 ]"
             >
                 <span
                     :class="[
                     selected ? 'font-medium' : 'font-normal',
-                    'block truncate',
+                    'block truncate capitalize',
                   ]"
                 >{{ option.day }}</span
                 >

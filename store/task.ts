@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from "@tanstack/vue-query"
 import {defineStore} from "pinia"
 
 export interface Task {
@@ -15,8 +16,12 @@ export const useTaskStore = defineStore('task', () => {
     day: "Today"
   })
   const createOrUpdateTask = async () => {
+    const createNewTask = async () => await fetch('http://localhost:3000/api/tasks?account=2', {method: 'put', body: JSON.stringify(task.value) })
+    const {data, suspense} = useMutation({ mutationFn: createNewTask, onSuccess: () => { } })
+    await suspense()
+    tasks.value = data.value
     try {
-      await $fetch('http://localhost:4000/api/v1/tasks', {method: 'put', body: task.value, query: {'account': 2}})
+      await $fetch('http://localhost:3000/api/tasks', {method: 'put', body: task.value, query: {'account': 2}})
     } catch (err) {
       console.log(err)
     }
@@ -24,11 +29,10 @@ export const useTaskStore = defineStore('task', () => {
   }
 
   const getTask = async () => {
-    try {
-      tasks.value = await $fetch('http://localhost:4000/api/v1/tasks', {method: 'get', query: {'account': 2}})
-    } catch (err) {
-      console.log(err)
-    }
+      const fetchAllTasks = async () => await fetch('http://localhost:3000/api/tasks?account=2', {method: 'get' }).then((response) => response.json())
+      const {data, suspense} = useQuery({ queryKey: ['tasks'], queryFn: fetchAllTasks })
+      await suspense()
+      tasks.value = data.value
   }
 
   const editTask = (id: any) => {

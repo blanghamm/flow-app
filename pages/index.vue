@@ -1,24 +1,22 @@
 <script lang="ts" setup>
-import {useTaskStore} from "~/store/task"
 import { useModalStore } from "~/store/modal"
-import {storeToRefs} from "pinia"
 import TaskCard from "~/pages/TaskCard.vue"
+import { useQuery } from "@tanstack/vue-query";
 
-const taskStore = useTaskStore()
 const modalStore = useModalStore()
-const { tasks } = storeToRefs(taskStore)
 
-await taskStore.getTask()
+const fetchAllTasks = async () => await fetch('http://localhost:3000/api/tasks', {method: 'get' }).then((response) => response.json())
+const { data, suspense } = useQuery({ queryKey: ['tasks'], queryFn: fetchAllTasks })
+await suspense()
 
 const todaysTasks = computed(() => {
-  return tasks.value.filter((task: any) => task.day === 'Today')
+  return data.value.filter((task: any) => task.day === 'today')
 })
 const tomorrowsTasks = computed(() => {
-  return tasks.value.filter((task: any) => task.day === 'Tomorrow')
+  return data.value.filter((task: any) => task.day === 'tomorrow')
 })
 
 const editTask = (id: number) => {
-  taskStore.editTask(id)
   modalStore.toggleModal()
 }
 </script>
@@ -29,7 +27,7 @@ const editTask = (id: number) => {
 <div class="text-xl w-full h-full py-8 px-16">
   <section class="grid grid-cols-2 h-full">
     <div class="flex flex-col h-full justify-start">
-      <h3 class="mb-4">Today's Tasks</h3>
+      <h3 class="mb-4">All Tasks</h3>
       <div v-for="task in todaysTasks" :key="task.id">
         <TaskCard :title="task.title" :description="task.description" :day="task.day" @click="editTask(task.id)"/>
       </div>

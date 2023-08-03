@@ -16,6 +16,7 @@
   "dependencies": {
     "@headlessui/vue": "^1.7.14",
     "@pinia/nuxt": "^0.4.7",
+    "@tanstack/vue-query": "^4.32.4",
     "pinia": "^2.0.32"
   }
 }
