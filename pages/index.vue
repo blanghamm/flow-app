@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { useModalStore } from '~/store/modal'
-import TaskCard from '~/pages/TaskCard.vue'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query'
 import type { Task } from '~/types'
 
