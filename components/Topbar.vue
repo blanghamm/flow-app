@@ -4,11 +4,11 @@ const store = useModalStore()
 </script>
 
 <template>
-  <div class="h-[52px] px-4 border-b border-gray-100 flex flex-row items-center justify-end">
-    <Button @click="store.toggleModal()"/>
+  <div
+    class="h-[52px] px-4 border-b border-gray-100 flex flex-row items-center justify-end"
+  >
+    <Button @click="store.toggleModal()" />
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

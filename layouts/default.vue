@@ -1,14 +1,13 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div class="flex flex-row w-full h-full">
-    <Sidebar/>
+    <Sidebar />
     <div class="w-full h-full">
-      <Topbar/>
+      <Topbar />
       <slot></slot>
       <Teleport to="body">
-        <Modal/>
+        <Modal />
       </Teleport>
     </div>
   </div>
