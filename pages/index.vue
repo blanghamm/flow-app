@@ -51,29 +51,10 @@ const editTask = (id: number) => {
 
 <template>
   <div class="text-xl w-full h-full py-8 px-16">
-    <section class="grid grid-cols-2 h-full">
-      <div class="flex flex-col h-full justify-start">
-        <h3 class="mb-4">Today's Tasks</h3>
-        <div v-for="task in todaysTasks" :key="task.id">
-          <TaskCard
-            :title="task.title"
-            :description="task.description"
-            :day="task.assignedDay"
-            @click="editTask(task.id)"
-          />
-        </div>
-      </div>
-      <div class="flex flex-col h-full justify-start">
-        <h3 class="mb-4">Tomorrow's Tasks</h3>
-        <div v-for="task in tomorrowsTasks" :key="task.id">
-          <TaskCard
-            :title="task.title"
-            :description="task.description"
-            :day="task.assignedDay"
-            @click="editTask(task.id)"
-          />
-        </div>
-      </div>
+    <section class="grid grid-cols-3 h-full gap-16">
+      <CardPresentationStack title="Backlog" :tasks="todaysTasks" @editTask="editTask" />
+      <CardPresentationStack title="Today" :tasks="todaysTasks" @editTask="editTask" />
+      <CardPresentationStack title="Tomorrow" :tasks="tomorrowsTasks" @editTask="editTask" />
     </section>
   </div>
 </template>

@@ -7,7 +7,7 @@ const store = useModalStore()
   <div
     class="h-[52px] px-4 border-b border-gray-100 flex flex-row items-center justify-end"
   >
-    <OldButton @click="store.toggleModal()" />
+    <Button @click="store.toggleModal()" />
   </div>
 </template>
 
